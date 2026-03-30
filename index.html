@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JHD Garage — Autoservis Praha 14</title>
+  <meta name="description" content="JHD Garage — profesionální autoservis na Manželů Dostálových, Praha 14. Volejte 739 460 525." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #000000;
+      --blue: #2563eb;
+      --blue-dark: #1d4ed8;
+      --white: #ffffff;
+      --gray: #a1a1aa;
+      --surface: #0a0a0a;
+      --border: #1a1a1a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* ── WATERMARK ── */
+    .watermark {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(160px, 28vw, 340px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: var(--white);
+      opacity: 0.05;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 6%;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--blue); }
+
+    .nav-phone {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-phone:hover { color: var(--blue); }
+
+    .nav-phone svg { width: 16px; height: 16px; fill: var(--blue); }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      max-height: 900px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      padding: 0 6%;
+      z-index: 1;
+    }
+
+    .hero-content {
+      max-width: 760px;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 28px;
+    }
+
+    .hero-tag::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 2px;
+      background: var(--blue);
+    }
+
+    h1 {
+      font-size: clamp(32px, 3.5vw, 52px);
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.025em;
+      margin-bottom: 20px;
+    }
+
+    h1 em {
+      font-style: normal;
+      color: var(--blue);
+    }
+
+    .hero-sub {
+      font-size: clamp(15px, 1.5vw, 18px);
+      color: var(--gray);
+      font-weight: 400;
+      margin-bottom: 44px;
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--blue);
+      color: var(--white);
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 28px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover { background: var(--blue-dark); transform: translateY(-1px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--white);
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 28px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-ghost:hover { border-color: var(--blue); color: var(--blue); }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-item {}
+
+    .stat-num {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--blue);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 6px;
+    }
+
+    /* ── KEYFRAMES ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal[data-delay="1"] { transition-delay: 0.1s; }
+    .reveal[data-delay="2"] { transition-delay: 0.2s; }
+    .reveal[data-delay="3"] { transition-delay: 0.3s; }
+    .reveal[data-delay="4"] { transition-delay: 0.4s; }
+
+    /* ── SECTION BASE ── */
+    section { position: relative; z-index: 1; }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 100px 6%;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blue);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .section-label::after {
+      content: '';
+      display: block;
+      flex: 1;
+      max-width: 60px;
+      height: 1px;
+      background: var(--blue);
+    }
+
+    .section-title {
+      font-size: clamp(26px, 2.8vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 56px;
+    }
+
+    /* ── SERVICES ── */
+    #services { background: var(--surface); border-top: 1px solid var(--border); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .service-card {
+      background: var(--surface);
+      padding: 36px 32px;
+      transition: background 0.2s;
+    }
+
+    .service-card:hover { background: #111111; }
+
+    .service-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(37,99,235,0.12);
+      border: 1px solid rgba(37,99,235,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .service-icon svg { width: 22px; height: 22px; stroke: var(--blue); fill: none; stroke-width: 1.8; }
+
+    .service-name {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .service-desc {
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--black); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .hero-stats { gap: 24px; }
+    }
+
+    .about-text {
+      font-size: 16px;
+      color: var(--gray);
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+
+    .about-highlight {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.4;
+      border-left: 3px solid var(--blue);
+      padding-left: 20px;
+      margin-bottom: 32px;
+    }
+
+    .about-aside {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 40px;
+    }
+
+    .aside-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .aside-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .aside-row:first-child { padding-top: 0; }
+
+    .aside-icon {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      background: rgba(37,99,235,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .aside-icon svg { width: 18px; height: 18px; stroke: var(--blue); fill: none; stroke-width: 1.8; }
+
+    .aside-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gray);
+      margin-bottom: 4px;
+    }
+
+    .aside-value {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--white);
+    }
+
+    .aside-value a {
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .aside-value a:hover { color: var(--blue); }
+
+    /* ── REVIEWS ── */
+    #reviews { background: var(--surface); border-top: 1px solid var(--border); }
+
+    .reviews-bar {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 48px;
+      padding: 28px 32px;
+      background: var(--black);
+      border: 1px solid var(--border);
+    }
+
+    .reviews-score {
+      font-size: 56px;
+      font-weight: 700;
+      color: var(--blue);
+      line-height: 1;
+    }
+
+    .reviews-meta {}
+
+    .stars {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 6px;
+    }
+
+    .stars svg { width: 18px; height: 18px; fill: #f59e0b; }
+
+    .reviews-count {
+      font-size: 13px;
+      color: var(--gray);
+    }
+
+    .review-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .review-card {
+      background: var(--black);
+      border: 1px solid var(--border);
+      padding: 28px;
+    }
+
+    .review-stars { display: flex; gap: 3px; margin-bottom: 14px; }
+    .review-stars svg { width: 14px; height: 14px; fill: #f59e0b; }
+
+    .review-text {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.65;
+      margin-bottom: 18px;
+    }
+
+    .review-author {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--black); border-top: 1px solid var(--border); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    .contact-cta-title {
+      font-size: clamp(24px, 2.5vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .contact-cta-sub {
+      font-size: 15px;
+      color: var(--gray);
+      line-height: 1.6;
+      margin-bottom: 36px;
+    }
+
+    .contact-info-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .contact-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .contact-row:first-child { border-top: 1px solid var(--border); }
+
+    .contact-row-icon {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      background: rgba(37,99,235,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .contact-row-icon svg { width: 18px; height: 18px; stroke: var(--blue); fill: none; stroke-width: 1.8; }
+
+    .contact-row-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gray);
+      margin-bottom: 4px;
+    }
+
+    .contact-row-value {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .contact-row-value a {
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contact-row-value a:hover { color: var(--blue); }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 32px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .footer-logo span { color: var(--blue); }
+
+    footer p {
+      font-size: 13px;
+      color: var(--gray);
+    }
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 200;
+      width: 56px;
+      height: 56px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .wa-float:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 28px rgba(37, 211, 102, 0.55);
+    }
+
+    .wa-float svg { width: 28px; height: 28px; fill: var(--white); }
+  </style>
+</head>
+<body>
+
+  <!-- Watermark -->
+  <div class="watermark" aria-hidden="true">JHD</div>
+
+  <!-- Nav -->
+  <nav>
+    <a href="#hero" class="nav-logo">JHD <span>Garage</span></a>
+    <a href="tel:+420739460525" class="nav-phone">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+      739 460 525
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-content">
+      <div class="hero-tag">Autoservis · Praha 14</div>
+      <h1>JHD <em>Garage</em> — Praha 14</h1>
+      <p class="hero-sub">Manželů Dostálových, profesionální servis.<br>Svěřte své auto do rukou, kterým na něm záleží.</p>
+      <div class="hero-actions">
+        <a href="tel:+420739460525" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+          Zavolat nyní
+        </a>
+        <a href="#services" class="btn-ghost">Naše služby</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">7+</div>
+          <div class="stat-label">Recenzí</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">5★</div>
+          <div class="stat-label">Hodnocení</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">Praha 14</div>
+          <div class="stat-label">Lokalita</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-inner">
+      <div class="section-label reveal" data-delay="1">Co nabízíme</div>
+      <h2 class="section-title reveal" data-delay="2">Komplexní péče o vaše vozidlo</h2>
+      <div class="services-grid">
+        <div class="service-card reveal" data-delay="1">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="service-name">Servis a diagnostika</div>
+          <div class="service-desc">Kompletní elektronická diagnostika, pravidelné servisní prohlídky a výměna provozních kapalin.</div>
+        </div>
+        <div class="service-card reveal" data-delay="2">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" stroke-linecap="round"/></svg>
+          </div>
+          <div class="service-name">Výměna oleje a filtrů</div>
+          <div class="service-desc">Rychlá výměna motorového oleje, olejového, vzduchového a kabinového filtru se zárukou kvality.</div>
+        </div>
+        <div class="service-card reveal" data-delay="3">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="service-name">Brzdy a pneuservis</div>
+          <div class="service-desc">Výměna brzdových destiček, kotoučů, přezutí a vyvažování kol. Kompletní péče o bezpečnost jízdy.</div>
+        </div>
+        <div class="service-card reveal" data-delay="4">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="service-name">Opravy a údržba</div>
+          <div class="service-desc">Mechanické opravy motoru, převodovky, podvozku i výfuku. Řešíme závady rychle a transparentně.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div>
+          <div class="section-label reveal" data-delay="1">O nás</div>
+          <div class="about-highlight reveal" data-delay="2">Opravujeme auta tak, jak bychom chtěli, aby opravili to naše.</div>
+          <p class="about-text reveal" data-delay="3">JHD Garage je rodinný autoservis v srdci Prahy 14. Pracujeme poctivě, bez zbytečných příplatků a s jasnou komunikací — vždy víte, co se na vašem autě děje a kolik to bude stát.</p>
+          <p class="about-text reveal" data-delay="4">Ať přijedete s osobním vozem, dodávkou nebo SUV, postaráme se o vás. Kvalitní díly, moderní vybavení a zkušení mechanici — to je náš standard.</p>
+        </div>
+        <div class="about-aside reveal" data-delay="2">
+          <div class="aside-row">
+            <div class="aside-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="10" r="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div class="aside-label">Adresa</div>
+              <div class="aside-value">Manželů Dostálových<br>198 00 Praha 14</div>
+            </div>
+          </div>
+          <div class="aside-row">
+            <div class="aside-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div class="aside-label">Telefon</div>
+              <div class="aside-value"><a href="tel:+420739460525">739 460 525</a></div>
+            </div>
+          </div>
+          <div class="aside-row">
+            <div class="aside-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 6v6l4 2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div class="aside-label">Provozní doba</div>
+              <div class="aside-value">Po–Pá: 8:00–17:00<br>So–Ne: po domluvě</div>
+            </div>
+          </div>
+          <div class="aside-row">
+            <div class="aside-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div class="aside-label">Hodnocení zákazníků</div>
+              <div class="aside-value">5★ — 7 recenzí</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews">
+    <div class="section-inner">
+      <div class="section-label reveal" data-delay="1">Recenze</div>
+      <h2 class="section-title reveal" data-delay="2">Co říkají zákazníci</h2>
+      <div class="reviews-bar reveal" data-delay="2">
+        <div class="reviews-score">5.0</div>
+        <div class="reviews-meta">
+          <div class="stars">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <div class="reviews-count">Celkem 7 recenzí · Google Maps</div>
+        </div>
+      </div>
+      <div class="review-cards">
+        <div class="review-card reveal" data-delay="1">
+          <div class="review-stars">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p class="review-text">"Skvělý servis, rychlé a poctivé. Auto opravili hned a za férovou cenu. Rozhodně doporučuji."</p>
+          <div class="review-author">Martin K.</div>
+        </div>
+        <div class="review-card reveal" data-delay="2">
+          <div class="review-stars">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p class="review-text">"Profesionální přístup, ochotný personál. Konečně servis, kde vám řeknou pravdu a nepřidávají zbytečné opravy."</p>
+          <div class="review-author">Jana P.</div>
+        </div>
+        <div class="review-card reveal" data-delay="3">
+          <div class="review-stars">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p class="review-text">"Chodím sem už 2 roky. Vždy spolehlivý, termíny drží, ceny odpovídají. Lepší servis v okolí nenajdete."</p>
+          <div class="review-author">Tomáš H.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-inner">
+      <div class="contact-grid">
+        <div>
+          <div class="section-label reveal" data-delay="1">Kontakt</div>
+          <h2 class="contact-cta-title reveal" data-delay="2">Rezervujte si termín dnes</h2>
+          <p class="contact-cta-sub reveal" data-delay="3">Zavolejte nebo napište přes WhatsApp — odpovídáme do hodiny v pracovní dny.</p>
+          <div class="reveal" data-delay="4">
+            <a href="tel:+420739460525" class="btn-primary" style="margin-right:12px;margin-bottom:12px;">
+              Zavolat 739 460 525
+            </a>
+            <a href="https://wa.me/420739460525" class="btn-ghost" target="_blank" rel="noopener">
+              WhatsApp
+            </a>
+          </div>
+        </div>
+        <div class="contact-info-block">
+          <div class="contact-row reveal" data-delay="1">
+            <div class="contact-row-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="10" r="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div class="contact-row-label">Adresa</div>
+              <div class="contact-row-value">Manželů Dostálových, 198 00 Praha 14</div>
+            </div>
+          </div>
+          <div class="contact-row reveal" data-delay="2">
+            <div class="contact-row-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div class="contact-row-label">Telefon</div>
+              <div class="contact-row-value"><a href="tel:+420739460525">739 460 525</a></div>
+            </div>
+          </div>
+          <div class="contact-row reveal" data-delay="3">
+            <div class="contact-row-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 6v6l4 2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div class="contact-row-label">Provozní doba</div>
+              <div class="contact-row-value">Po–Pá: 8:00–17:00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-logo">JHD <span>Garage</span></div>
+    <p>Manželů Dostálových · 198 00 Praha 14 · 739 460 525</p>
+    <p>&copy; 2025 JHD Garage. Všechna práva vyhrazena.</p>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <a href="https://wa.me/420739460525" class="wa-float" target="_blank" rel="noopener" aria-label="Kontaktujte nás na WhatsApp">
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16 0C7.163 0 0 7.163 0 16c0 2.822.737 5.469 2.027 7.773L0 32l8.453-2.007A15.936 15.936 0 0016 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm8.121 22.184c-.337.946-1.672 1.731-2.744 1.958-.73.156-1.685.28-4.896-1.052-4.113-1.672-6.757-5.846-6.963-6.115-.198-.27-1.661-2.21-1.661-4.214 0-2.005 1.045-2.985 1.42-3.396.337-.36.733-.451 1.001-.451.243 0 .485.003.697.013.224.011.524-.085.82.626.312.74 1.063 2.568 1.157 2.754.094.187.157.405.031.648-.117.253-.186.41-.37.63-.185.22-.39.49-.555.657-.185.187-.378.39-.163.766.214.375.952 1.57 2.045 2.542 1.405 1.252 2.59 1.64 2.965 1.826.375.187.594.157.812-.094.22-.253.941-1.097 1.193-1.472.25-.375.5-.312.843-.187.343.124 2.18 1.028 2.554 1.214.375.187.624.28.716.437.094.157.094.914-.243 1.86z"/>
+    </svg>
+  </a>
+
+  <script>
+    // Scroll reveal with IntersectionObserver
+    const revealEls = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
